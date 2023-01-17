@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/jarno171/mooc_full_stack_part13_2022/issues"
   },
-  "homepage": "https://github.com/jarno171/mooc_full_stack_part13_2022#readme"
+  "homepage": "https://github.com/jarno171/mooc_full_stack_part13_2022#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "pg": "^8.8.0",
+    "sequelize": "^6.28.0"
+  }
 }
