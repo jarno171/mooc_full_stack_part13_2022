@@ -49,11 +49,17 @@ router.put('/:id', blogFinder, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
-  if (req.blog) {
+router.delete('/:id', tokenExtractor, blogFinder, async (req, res, next) => {
+  const user = await User.findByPk(req.decodedToken.id)
+
+  if (req.blog && user && user.id === req.blog.userId) {
     await req.blog.destroy()
+    res.status(204).end()
+  } else {
+    const error = new Error('not authorized to delete blog')
+    error.name = "DeleteError"
+    next(error)
   }
-  res.status(204).end()
 })
 
 module.exports = router

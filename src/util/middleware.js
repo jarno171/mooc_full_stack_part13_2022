@@ -19,6 +19,10 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: 'the given id is missing' })
   }
 
+  if (error.name === 'DeleteError') {
+    return response.status(400).send({ error: "not authorized to delete blog" })
+  }
+
   next(error)
 }
 
