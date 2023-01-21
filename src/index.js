@@ -1,6 +1,5 @@
-const { PORT, DATABASE_URL } = require('./util/config')
+const { PORT } = require('./util/config')
 
-const { Sequelize, Model, DataTypes } = require('sequelize')
 const express = require('express')
 const app = express()
 
