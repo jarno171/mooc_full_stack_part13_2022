@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { Blog } = require('../models')
+const { User, Blog } = require('../models')
 
 const blogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id)
@@ -22,7 +22,8 @@ router.get('/:id', blogFinder, async (req, res) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const blog = await Blog.create(req.body)
+    const user = await User.findOne()
+    const blog = await Blog.create({...req.body, userId: user.id})
     return res.json(blog)
   } catch(error) {
     next(error)
