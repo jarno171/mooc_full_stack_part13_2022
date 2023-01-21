@@ -41,7 +41,6 @@ router.put('/:id', blogFinder, async (req, res, next) => {
       next(error)
     }
   } else {
-    //res.status(404).end()
     const error = new Error('blog id missing')
     error.name = 'IdMissing'
     next(error)
