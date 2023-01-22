@@ -22,7 +22,10 @@ router.get('/', async (req, res) => {
           [Op.iLike]: `%${req.query.search ? req.query.search : ""}%`
         }
       }
-    }
+    },
+    order: [
+      ['likes', 'DESC']
+    ]
   })
   res.json(blogs)
 })
