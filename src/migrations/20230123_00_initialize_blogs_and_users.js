@@ -21,18 +21,15 @@ module.exports = {
         allowNull: false
       },
       likes: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0
+        type: DataTypes.INTEGER
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.fn('now')
+        allowNull: false
       },
       updated_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.fn('now')
+        allowNull: false
       },
     })
     await queryInterface.createTable('users', {
@@ -44,10 +41,7 @@ module.exports = {
       username: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false,
-        validate: {
-          isEmail: true
-        }
+        allowNull: false
       },
       name: {
         type: DataTypes.STRING,
@@ -55,13 +49,11 @@ module.exports = {
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.fn('now')
+        allowNull: false
       },
       updated_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.fn('now')
+        allowNull: false
       },
     })
     await queryInterface.addColumn('blogs', 'user_id', {
