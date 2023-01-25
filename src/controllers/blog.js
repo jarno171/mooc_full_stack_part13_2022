@@ -10,6 +10,9 @@ const blogFinder = async (req, res, next) => {
 
 router.get('/', async (req, res) => {
   const blogs = await Blog.findAll({
+    include: {
+      model: User
+    },
     where: {
       [Op.or]: {
         title: {
