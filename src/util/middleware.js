@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 
 const { SECRET } = require('../util/config')
 
+const { Session, User } = require('../models')
+
 const errorHandler = (error, request, response, next) => {
   console.error(error)
 
@@ -26,11 +28,31 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+      const givenToken = authorization.substring(7)
+      const decodedToken = jwt.verify(givenToken, SECRET)
+
+      const session = await Session.findOne({
+        include: {
+          model: User,
+          where: {
+            disabled: false
+          }
+        },
+        where: {
+          user_id: decodedToken.id,
+          token: givenToken
+        }
+      })
+      
+      if (session) {
+        req.decodedToken = decodedToken
+      } else {
+        return res.status(401).json({ error: 'invalid session or user disabled' })
+      }
     } catch(error) {
       console.log(error)
       return res.status(401).json({ error: 'token invalid' })
